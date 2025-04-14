@@ -1,0 +1,159 @@
+body{
+    min-width: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
+    margin: 0px;
+}
+.header__Notion{
+min-width: 100%;
+height: 100px;
+background-color: #5E4599;
+margin: 0px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.header__Notion > * {
+    margin-right: 10px;
+}
+
+.header__Notion > button{
+    height: 50px;
+    min-width: 200px;
+}
+.header__Notion__AddTaskPlanner{
+    min-width: 200px;
+    min-height: 50px;
+    background-color: #fff;
+    cursor: pointer;
+    border: 2px solid black;
+    box-shadow: 2px 2px black;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: background ease 2s;
+}
+.header__Notion__AddTaskPlanner:hover{
+    background-color: rgb(197, 199, 199);
+}
+.main__container__navegation{
+    min-height: 25px;
+    min-width: 100px;
+    padding: 20px;
+    background-color: rgb(159, 140, 245);
+}
+.main__container__navegation__ul{
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.0rem;
+    font-weight: 400;
+    margin: 0px;
+    padding: 0px;
+}
+.main__container__navegation__ul > li{
+    cursor: pointer;
+    transition: color ease 1s;
+}
+.main__container__navegation__ul > li:hover{
+    color: #fff;
+}
+.main__container__taskList{
+    width: 100%;
+    min-height: 100%;
+    display: none; /* flex */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.main__container__taskList__cart{
+    margin-top: 50px;
+    background-color: #404040;
+    min-width: 200px;
+    max-width: 100%;
+    min-height: 200px;
+    color: #fff;
+}
+.main__container__taskList__cart__grid{
+    display: grid;
+    grid-template-columns: 2fr;
+    grid-template-rows: repeat(maxmin(6, 3), 1fr);
+    gap: 10px;
+    padding: 30px;
+}
+.main__container__taskList__cart__grid__itemsType1{
+    display: flex;
+    justify-content: space-between;
+    grid-column: 1/2;
+    gap: 100px
+}
+.main__container__taskList__cart__grid__itemsType1 > p {
+    max-width: 200px;
+    text-overflow: initial;
+}
+.main__container__taskList__cart__grid__itemsType2{
+    text-align: center;
+}
+.main__container__taskList__cart__grid__itemsType3{
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    grid-column: 1/2;
+}
+svg{
+    cursor: pointer;
+}
+.main__container__addTaskList{
+    width: 80%;
+    min-height: 100%;
+    background-color: #404040;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #fff;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.main__container__addTaskList__container{
+    min-width: 100%;
+    min-height: 100%;
+    background-color: #404040;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #fff;
+}
+.main__container__addTaskList__container > svg{
+    margin-top: 20px;
+}
+#saveAllTasks{
+    margin: 10px 0px 10px 0px;
+    padding: 10px;
+    color: #000000;
+    background-color: rgb(159, 140, 245);
+    cursor: pointer;
+    border: 4px solid #5E4599;
+    width: 60%;
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: font-size ease 1.2s;
+}
+#saveAllTasks:hover{
+    font-size: 1.4rem;
+}
+#removeApiKeyBut{
+    background-color: red;
+}
+
+@media screen and (min-width: 1000px){
+    .main__container__navegation__ul{
+        font-size: 1.2rem;
+    }
+    .main__container__taskList__cart{
+        max-width: 70%;
+    }
+    
+}
