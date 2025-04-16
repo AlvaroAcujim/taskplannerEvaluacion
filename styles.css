@@ -147,6 +147,37 @@ svg{
 #removeApiKeyBut{
     background-color: red;
 }
+#map{
+    height: 100%;
+    width: 100%;
+}
+#errorMessages{
+    color: red;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main__container__time{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main__container__time_cart{
+    color: white;
+    width: 50%;
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(29, 35, 122);
+}
+.main__container__time_cart > h3 > span{
+    margin: 0px 5px 0px 5px;
+    font-size: 1.7rem;
+    color: rgb(255, 0, 0);
+}
 
 @media screen and (min-width: 1000px){
     .main__container__navegation__ul{

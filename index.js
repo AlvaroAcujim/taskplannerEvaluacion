@@ -6,17 +6,22 @@ const addTaskNav = document.getElementById('addTaskNav');
 const timeNav = document.getElementById('timeNav');
 const taskListContainer = document.getElementById('taskListContainer');
 const addTaskContainer = document.getElementById('addTaskContainer');
+const timeContainer = document.getElementById('timeContainer');
 const addTaskBut = document.getElementById('addButton');
 const taskStatus = document.getElementById('taskStatusInput');
 const taskName = document.getElementById('taskNameInput');
 const taskDate = document.getElementById('taskDateInput');
 const headerContainer = document.getElementById('headerContainer');
 const addApiKeyBut = document.getElementById('addApiKey');
+const errorDiv = document.getElementById('errorMessages');
 
 
 let task = [];
-let apiKey = '';
 let idTask = 0;
+let token = 'K47EeJsATAmlAq25daGeyu7BR9DBLSaB'
+let idTable = '506963';
+let lon;
+let lat;
 
 window.addEventListener('load', ev => {
     const storedArticles = localStorage.getItem('articles')
@@ -25,8 +30,9 @@ window.addEventListener('load', ev => {
             createTaskArticle(el.title, el.status, el.date)
         })
         showMenus(taskListContainer);
+        openMeteoApiAndUserGeolocation();
     }
-    createAddTaskNotionBut();
+    createAddTaskBaserowBut();
     
 });
 
@@ -34,8 +40,17 @@ addApiKeyBut.addEventListener('click', () => {
     createRemoveApiKeyBut();
 });
 
-taskListNav.addEventListener('click', () => showMenus(taskListContainer))
-addTaskNav.addEventListener('click', () => showMenus(addTaskContainer))
+taskListNav.addEventListener('click', () => {
+    showMenus(taskListContainer)
+    removeErrorMessage()
+});
+addTaskNav.addEventListener('click', () => {
+    showMenus(addTaskContainer)
+    removeErrorMessage()
+});
+timeNav.addEventListener('click', () => { 
+    showMenus(timeContainer)
+});
 addTaskBut.addEventListener('click', () => {
     const taskNameInput = taskName.value;
     const taskStatusInput = taskStatus.value;
@@ -138,7 +153,7 @@ const editTaskButAction = (idTask) => {
             while(divButtons.firstElementChild){
                 divButtons.firstElementChild.remove();
             }
-            const svgSave = '<svg id="saveIcon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 48 48"><!-- Icon from Fluent UI System Color Icons by Microsoft Corporation - https://github.com/microsoft/fluentui-system-icons/blob/main/LICENSE --><g fill="none"><path fill="url(#fluentColorDocumentAdd480)" d="M11 43h26a3 3 0 0 0 3-3V18l-10-4l-4-10H11a3 3 0 0 0-3 3v33a3 3 0 0 0 3 3"/><path fill="url(#fluentColorDocumentAdd484)" fill-opacity=".5" d="M11 43h26a3 3 0 0 0 3-3V18l-10-4l-4-10H11a3 3 0 0 0-3 3v33a3 3 0 0 0 3 3"/><path fill="url(#fluentColorDocumentAdd485)" fill-opacity=".5" d="M11 43h26a3 3 0 0 0 3-3V18l-10-4l-4-10H11a3 3 0 0 0-3 3v33a3 3 0 0 0 3 3"/><path fill="url(#fluentColorDocumentAdd481)" d="M26 15V4l14 14H29a3 3 0 0 1-3-3"/><path fill="url(#fluentColorDocumentAdd482)" d="M13 24c6.075 0 11 4.925 11 11s-4.925 11-11 11S2 41.075 2 35s4.925-11 11-11"/><path fill="url(#fluentColorDocumentAdd483)" fill-rule="evenodd" d="M13 27a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2h-6v6a1 1 0 1 1-2 0v-6H6a1 1 0 1 1 0-2h6v-6a1 1 0 0 1 1-1" clip-rule="evenodd"/><defs><linearGradient id="fluentColorDocumentAdd480" x1="30.4" x2="33.484" y1="4" y2="36.911" gradientUnits="userSpaceOnUse"><stop stop-color="#6CE0FF"/><stop offset="1" stop-color="#4894FE"/></linearGradient><linearGradient id="fluentColorDocumentAdd481" x1="32.977" x2="29.477" y1="9.833" y2="15.667" gradientUnits="userSpaceOnUse"><stop stop-color="#9FF0F9"/><stop offset="1" stop-color="#B3E0FF"/></linearGradient><linearGradient id="fluentColorDocumentAdd482" x1="2.786" x2="17.968" y1="28.125" y2="43.899" gradientUnits="userSpaceOnUse"><stop stop-color="#52D17C"/><stop offset="1" stop-color="#22918B"/></linearGradient><linearGradient id="fluentColorDocumentAdd483" x1="8" x2="12.909" y1="28.632" y2="45.962" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset="1" stop-color="#E3FFD9"/></linearGradient><radialGradient id="fluentColorDocumentAdd484" cx="0" cy="0" r="1" gradientTransform="matrix(-17.33333 17.73237 -10.47911 -10.24329 41.333 5.219)" gradientUnits="userSpaceOnUse"><stop offset=".362" stop-color="#4A43CB"/><stop offset="1" stop-color="#4A43CB" stop-opacity="0"/></radialGradient><radialGradient id="fluentColorDocumentAdd485" cx="0" cy="0" r="1" gradientTransform="matrix(.8 17.875 -17.9901 .80516 12.8 40.563)" gradientUnits="userSpaceOnUse"><stop offset=".535" stop-color="#4A43CB"/><stop offset="1" stop-color="#4A43CB" stop-opacity="0"/></radialGradient></defs></g></svg>'
+            const svgSave = '<svg id="saveIcon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 48 48"><!-- Icon from Fluent UI System Color Icons by Microsoft Corporation - https://github.com/microsoft/fluentui-system-icons/blob/main/LICENSE --><g fill="none"><path fill="url(#fluentColorDocumentAdd480)" d="M11 43h26a3 3 0 0 0 3-3V18l-10-4l-4-10H11a3 3 0 0 0-3 3v33a3 3 0 0 0 3 3"/><path fill="url(#fluentColorDocumentAdd484)" fill-opacity=".5" d="M11 43h26a3 3 0 0 0 3-3V18l-10-4l-4-10H11a3 3 0 0 0-3 3v33a3 3 0 0 0 3 3"/><path fill="url(#fluentColorDocumentAdd485)" fill-opacity=".5" d="M11 43h26a3 3 0 0 0 3-3V18l-10-4l-4-10H11a3 3 0 0 0-3 3v33a3 3 0 0 0 3 3"/><path fill="url(#fluentColorDocumentAdd481)" d="M26 15V4l14 14H29a3 3 0 0 1-3-3"/><path fill="url(#fluentColorDocumentAdd482)" d="M13 24c6.075 0 11 4.925 11 11s-4.925 11-11 11S2 41.075 2 35s4.925-11 11-11"/><path fill="url(#fluentColorDocumentAdd483)" fill-rule="evenodd" d="M13 27a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2h-6v6a1 1 0 1 1-2 0v-6H6a1 1 0 1 1 0-2h6v-6a1 1 0 0 1 1-1" clip-rule="evenodd"/><defs><linearGradient id="fluentColorDocumentAdd480" x1="30.4" x2="33.484" y1="4" y2="36.911" gradientUnits="userSpaceOnUse"><stop stop-color="#6CE0FF"/><stop offset="1" stop-color="#4894FE"/></linearGradient><linearGradient id="fluentColorDocumentAdd481" x1="32.977" x2="29.477" y1="9.833" y2="15.667" gradientUnits="userSpaceOnUse"><stop stop-color="#9FF0F9"/><stop offset="1" stop-color="#B3E0FF"/></linearGradient><linearGradient id="fluentColorDocumentAdd482" x1="2.786" x2="17.968" y1="28.125" y2="43.899" gradientUnits="userSpaceOnUse"><stop stop-color="#52D17C"/><stop offset="1" stop-color="#22918B"/></linearGradient><linearGradient id="fluentColorDocumentAdd483" x1="8" x2="12.909" y1="28.632" y2="45.962" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset="1" stop-color="#E3FFD9"/></linearGradient><radialGradient id="fluentColorDocumentAdd484" cx="0" cy="0" r="1" gradientTransform="matrix(-17.33333 17.73237 -10.47911 -10.24329 41.333 5.219)" gradientUnits="userSpaceOnUse"><stop offset=".362" stop-color="#4A43CB"/><stop offset="1" stop-color="#4A43CB" stop-opacity="0"/></radialGradient><radialGradient id="fluentColorDocumentAdd485" cx="0" cy="0" r="1" gradientTransform="matrix(.8 17.875 -17.9901 .80516 12.8 40.563)" gradientUnits="userSpaceOnUse"><stop offset=".535" stop-color="#4A43CB"/><stop offset="1" stop-color="#4A43CB" stop-opacity="0"/></radialGradient></defs></g></svg>';
             
             divButtons.innerHTML = svgSave;
             confirmEditTaskButAction(idTask);
@@ -229,14 +244,25 @@ const deleteAndPutConfirmSaveTasksBut = () => {
     const txt = document.createTextNode('Guardar Tareas');
     saveAllTaskBut.append(txt);
     taskListContainer.append(saveAllTaskBut);
-    saveAllTaskBut.addEventListener('click', ev => {
+    saveAllTaskButAction(saveAllTaskBut);
+}
+const saveAllTaskButAction = (saveAllTaskBut) => {
+    saveAllTaskBut.addEventListener('click', async(ev) => {
         if(localStorage.getItem('articles')){
             localStorage.clear();
         }
         localStorage.setItem('articles', JSON.stringify(task))
-        console.log(JSON.parse(localStorage.getItem('articles')));
+        if(token && idTable){
+            removeErrorMessage();
+            await removeAllTaskFromBaserow();
+            await postTask(task);
+            alert('Guardado Correctamente en baserow');
+        }else{
+            createErrorMessage('El token o el idTable no son correctos pero se ha guardado en localStorage');
+        }
     })
 }
+
 const removeElementHeaderContainer = () => {
     while(headerContainer.firstChild){
         headerContainer.firstChild.remove();
@@ -253,29 +279,109 @@ const createBut = (txt, classCss, id, callback) => {
     return but;
 }
 
-const createAddTaskNotionBut = () => {
+const createAddTaskBaserowBut = () => {
     removeElementHeaderContainer();
-        const addApiKetBut = createBut('Agregar Taskplanner en Notion', 'header__Notion__AddTaskPlanner', 'addApiKey', ()=> {
-        apiKey = '';
+        const addApiKetBut = createBut('Agregar Taskplanner en Baserow', 'header__Notion__AddTaskPlanner', 'addApiKey', ()=> {
+        token = '';
         removeElementHeaderContainer();
-        const h3 = createH3orH2('Agregue su api key: ', 'h3');
+        const h3 = createH3orH2('Agregue su token y su idTable: ', 'h3');
         const input = createInput('');
+        const input2 = createInput('');
         const submitApiKey = createBut('Agregar Api', 'header__Notion__AddTaskPlanner', 'addApiKey', () => {
-            apiKey = input.value;
-            console.log(apiKey)
+            token = input.value;
+            idTable = input2.value;
             createRemoveApiKeyBut();
         });
-        headerContainer.append(h3, input, submitApiKey);
+        headerContainer.append(h3, input, input2, submitApiKey);
         });
     headerContainer.append(addApiKetBut);
 }
+const postTask = (task) => {
+    try{
+        task.forEach(async(el) => {
+            const response = await fetch(`https://api.baserow.io/api/database/rows/table/${idTable}/`, {
+                method: "POST",
+                headers: {
+                  "Authorization": `Token ${token}`,
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                  "field_4009866": el.title,
+                    "field_4009868": el.status,
+                    "field_4009867": el.date
+                })
+              });
+            const result = await response.json();
+            console.log(result);
+        })
+        
+    }catch ( error ){
+        return error;
+    }
+    
+}
+const removeAllTaskFromBaserow = async() => {
+    try{
+    const getRes = await fetch(`https://api.baserow.io/api/database/rows/table/${idTable}/?user_field_names=true`, {
+      headers: {
+        "Authorization": `Token ${token}`
+      }
+    });
+    const existing = await getRes.json();
+    for (const el of existing.results) {
+      await fetch(`https://api.baserow.io/api/database/rows/table/${idTable}/${el.id}/`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Token ${token}`
+        }
+      });
+      console.log(`Fila con id ${el.id} eliminada`);
+    }
+    }catch(error){
+        console.log(error);
+    }
+}
 
+const createErrorMessage = (text) => {
+    let h2Error = createH3orH2(text, 'h2');
+    errorDiv.append(h2Error);
+}
+const removeErrorMessage = () => {
+    while(errorDiv.firstChild){
+        errorDiv.firstChild.remove();
+    }
+}
 const createRemoveApiKeyBut = () => {
     removeElementHeaderContainer();
-    const removeApiKeyBut = createBut('Quitar api key', 'header__Notion__AddTaskPlanner', 'removeApiKeyBut', ()=> {
-    apiKey = '';
+    const removeApiKeyBut = createBut('Quitar token e idTable', 'header__Notion__AddTaskPlanner', 'removeApiKeyBut', ()=> {
+    token = '';
+    idTable = '';
     removeElementHeaderContainer();
-    createAddTaskNotionBut();
+    createAddTaskBaserowBut();
     });
     headerContainer.append(removeApiKeyBut);
+}
+const openMeteoApiAndUserGeolocation = () => {
+    navigator.geolocation.getCurrentPosition(
+        async (position) => {
+        lat = position.coords.latitude;
+        lon = position.coords.longitude;
+        console.log(lat, lon)
+        try{
+            const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=auto`);
+            const data = await response.json();
+            console.log(data)
+        }catch(err){
+            console.log(err);
+            createErrorMessage('Ha ocurrido un error');
+        }
+      }, 
+      (error) => {
+        if (error.code === error.PERMISSION_DENIED) {
+          createErrorMessage('Has denegado el acceso a la ubicación. No se puede obtener el clima. La sección tiempo requiere de este permiso');
+        } else {
+          alert("Error al obtener la ubicación: " + error.message);
+        }
+        console.error("Geolocation error:", error);
+      });
 }

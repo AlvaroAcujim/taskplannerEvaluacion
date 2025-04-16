@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js" defer></script>
     <script src="index.js" defer></script>
     <title>Document</title>
 </head>
@@ -15,6 +17,7 @@
     </header>
     <main>
         <div class="main__container">
+            
             <section>
                 <div class="main__container__navegation">
                     <nav>
@@ -24,6 +27,11 @@
                             <li id="timeNav">Tiempo</li>
                         </ul>
                     </nav>
+                </div>
+            </section>
+            <section>
+                <div id="errorMessages">
+
                 </div>
             </section>
             <section class="main__container__taskList" id="taskListContainer">
@@ -45,9 +53,16 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" id="addButton"><g fill="none"><path fill="url(#fluentColorAddCircle320)" d="M30 16c0 7.732-6.268 14-14 14S2 23.732 2 16S8.268 2 16 2s14 6.268 14 14"/><path fill="url(#fluentColorAddCircle321)" d="M15 10a1 1 0 1 1 2 0v5h5a1 1 0 1 1 0 2h-5v5a1 1 0 1 1-2 0v-5h-5a1 1 0 1 1 0-2h5z"/><defs><linearGradient id="fluentColorAddCircle320" x1="3" x2="22.323" y1="7.25" y2="27.326" gradientUnits="userSpaceOnUse"><stop stop-color="#52D17C"/><stop offset="1" stop-color="#22918B"/></linearGradient><linearGradient id="fluentColorAddCircle321" x1="11.625" x2="15.921" y1="10.428" y2="25.592" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset="1" stop-color="#E3FFD9"/></linearGradient></defs></g></svg>
                 </div>
             </section>
-            <section class="main__container__time">
-
+            <section class="main__container__time" id="timeContainer">
+                <div class="main__container__time_cart">
+                    <h2>Dia: 2025-04-16</h2>
+                    
+                   
+                    <h3>Temp Maxima: <span>19.7</span> Temp Minima: <span>7</span> Precipitacion: <span>0</span></h3>
+                    
+                </div>
             </section>
+
         </div>
     </main>
     <footer>
