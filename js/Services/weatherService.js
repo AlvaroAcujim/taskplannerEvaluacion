@@ -5,7 +5,7 @@ export const openMeteoApiAndUserGeolocation = (generateWeatherCarts, createError
         lon = position.coords.longitude;
         console.log(lat, lon)
         try{
-            const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=auto`);
+            const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto`);
             const data = await response.json();
             generateWeatherCarts(data);
         }catch(err){
