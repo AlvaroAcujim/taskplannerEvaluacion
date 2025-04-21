@@ -24,6 +24,10 @@ const showNotStarted = document.getElementById('showNotStarted');
 
 let task = [];
 let idTask = 0;
+//El token y el idtable se consigue dentro de baserow, primero hay que crear una base de datos -> click en los 3 puntitos (numero entre parentesis)
+//El token se obtiene en tu perfil -> mi configuración -> fichas de la base de datos (dar permisos). La base de datos tiene que tener:
+//Columnas: +Fecha -> fecha con hora, +Descripción -> texto largo, +estado -> selección única opciones: 1. Pendiente 2. Finalizado 3. No iniciada, 
+// +titulo ->Texto de una sola línea y por último fecha_creacion -> fecha con hora. Es importante tanto el orden como esta escrito en estos comentarios
 let token = '';
 let idTable = '';
 let lon;
@@ -330,13 +334,19 @@ const createRemoveApiKeyBut = () => {
 };
 
 const generateWeatherCarts = (data) => {
+    console.log(data)
     for(let i = 0; i< 7; i++){
         let divTime = document.createElement('div');
         divTime.setAttribute('class', 'main__container__time_cart');
         let day = createH3orH2(`Dia: ${data.daily.time[i]}`, 'h2');
         divTime.append(day);
         let divSvg = document.createElement('div');
-        const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 48 48"><circle cx="23.997" cy="23.995" r="9.438" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M2.5 23.995h7.346M23.997 45.5v-7.35m0-28.3V2.5m14.157 21.495H45.5M8.79 39.192l5.195-5.194M39.2 39.2l-5.198-5.198M13.989 13.991L8.79 8.794m25.212 5.19l5.194-5.194"/></svg>';
+        let svg = '';
+        if(data.daily.precipitation_probability_max[i] >= 20){
+            svg = '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m12.5 15l-1 2m5.5-2l-1 2m-2.5 2l-1 2M8 15l-1 2m2 2l-1 2m9.478-12.102h.022c2.485 0 4.5 1.98 4.5 4.423A4.4 4.4 0 0 1 20 17m-2.522-8.102q.021-.243.022-.492C17.5 5.421 15.038 3 12 3C9.123 3 6.762 5.171 6.52 7.937m10.958.961a5.33 5.33 0 0 1-1.235 2.949M6.52 7.937C3.984 8.175 2 10.274 2 12.83a4.88 4.88 0 0 0 2 3.932m2.52-8.825q.237-.022.48-.022c1.126 0 2.165.366 3 .983" color="currentColor"/></svg>'
+        }else{
+            svg = '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 48 48"><circle cx="23.997" cy="23.995" r="9.438" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M2.5 23.995h7.346M23.997 45.5v-7.35m0-28.3V2.5m14.157 21.495H45.5M8.79 39.192l5.195-5.194M39.2 39.2l-5.198-5.198M13.989 13.991L8.79 8.794m25.212 5.19l5.194-5.194"/></svg>';
+        }
         divSvg.innerHTML = svg;
         divTime.append(divSvg);
         let tempMax = createH3orH2('Temp Maxima: ', 'h3');
@@ -353,7 +363,7 @@ const generateWeatherCarts = (data) => {
         divTime.append(tempMin);
         let precipitation = createH3orH2('Precipitacion: ', 'h3');
         let spanPrecipitation = document.createElement('span');
-        let txtPrecipitation= document.createTextNode(data.daily.precipitation_sum[i]);
+        let txtPrecipitation= document.createTextNode(data.daily.precipitation_probability_max[i]);
         spanPrecipitation.append(txtPrecipitation);
         precipitation.append(spanPrecipitation);
         divTime.append(precipitation);

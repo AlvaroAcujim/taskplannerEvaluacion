@@ -192,7 +192,7 @@ svg{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: rgb(29, 35, 122);
+    background-color: #404040;
 }
 .main__container__time_cart > svg{
     color: yellow;
@@ -201,7 +201,7 @@ svg{
 .main__container__time_cart > h3 > span{
     margin: 0px 5px 0px 5px;
     font-size: 1.7rem;
-    color: rgb(255, 0, 0);
+    color: rgb(255, 255, 255);
 }
 
 @media screen and (min-width: 1000px){
