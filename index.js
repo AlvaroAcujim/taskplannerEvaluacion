@@ -24,8 +24,8 @@ const showNotStarted = document.getElementById('showNotStarted');
 
 let task = [];
 let idTask = 0;
-let token = 'K47EeJsATAmlAq25daGeyu7BR9DBLSaB';
-let idTable = '506963';
+let token = '';
+let idTable = '';
 let lon;
 let lat;
 
@@ -294,7 +294,9 @@ const createAddTaskBaserowBut = () => {
         removeElementHeaderContainer();
         const h3 = createH3orH2('Agregue su token y su idTable: ', 'h3');
         const input = createInput('');
+        input.setAttribute('placeholder', 'token');
         const input2 = createInput('');
+        input2.setAttribute('placeholder', 'idTable');
         const submitApiKey = createBut('Agregar Api', 'header__Notion__AddTaskPlanner', 'addApiKey', () => {
             token = input.value;
             idTable = input2.value;
