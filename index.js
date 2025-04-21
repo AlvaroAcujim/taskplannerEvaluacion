@@ -24,8 +24,8 @@ const showNotStarted = document.getElementById('showNotStarted');
 
 let task = [];
 let idTask = 0;
-let token = 'K47EeJsATAmlAq25daGeyu7BR9DBLSaB';
-let idTable = '506963';
+let token = '';
+let idTable = '';
 let lon;
 let lat;
 
