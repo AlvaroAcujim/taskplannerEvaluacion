@@ -294,7 +294,9 @@ const createAddTaskBaserowBut = () => {
         removeElementHeaderContainer();
         const h3 = createH3orH2('Agregue su token y su idTable: ', 'h3');
         const input = createInput('');
+        input.setAttribute('placeholder', 'token');
         const input2 = createInput('');
+        input2.setAttribute('placeholder', 'idTable');
         const submitApiKey = createBut('Agregar Api', 'header__Notion__AddTaskPlanner', 'addApiKey', () => {
             token = input.value;
             idTable = input2.value;
