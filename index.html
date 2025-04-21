@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="styles.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js" defer></script>
-    <script src="index.js" defer></script>
+    <script src="index.js" type="module" defer></script>
     <title>Document</title>
 </head>
 <body>
@@ -30,9 +28,20 @@
                 </div>
             </section>
             <section>
+                <div class="main__container__navegation__filter" id="filter">
+                    <nav>
+                        <ul class="main__container__navegation__ul">
+                            <li id="showAll">Tareas</li>
+                            <li id="showNotStarted">No iniciada</li>
+                            <li id="showFinished">Finalizado</li>
+                            <li id="showPending">Pendiente</li>
+                        </ul>
+                    </nav>
+                </div>
                 <div id="errorMessages">
 
                 </div>
+                
             </section>
             <section class="main__container__taskList" id="taskListContainer">
                 
@@ -40,8 +49,10 @@
             <section class="main__container__addTaskList" id="addTaskContainer">
                 <div class="main__container__addTaskList__container">
                     <h2>Agregar tarea</h2>
-                    <h3>Nombre de la tarea:</h3>
-                    <input type="text" id="taskNameInput">
+                    <h3>Título de la tarea:</h3>
+                    <input type="text" id="taskTitleInput">
+                    <h3>Descripcion de la tarea:</h3>
+                    <input type="text" id="taskDescInput">
                     <h3>Estado</h3>
                     <select id="taskStatusInput">
                         <option value="Pendiente">Pendiente</option>
@@ -54,13 +65,7 @@
                 </div>
             </section>
             <section class="main__container__time" id="timeContainer">
-                <div class="main__container__time_cart">
-                    <h2>Dia: 2025-04-16</h2>
-                    
-                   
-                    <h3>Temp Maxima: <span>19.7</span> Temp Minima: <span>7</span> Precipitacion: <span>0</span></h3>
-                    
-                </div>
+                
             </section>
 
         </div>
