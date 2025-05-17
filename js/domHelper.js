@@ -4,15 +4,18 @@ export const showMenus = (element) => {
     timeContainer.style.display = 'none';
     element.style.display = 'flex'
 };
+
 export const showFilter = (divDisplay) => {
     filter.style.display = divDisplay;
 };
+
 export const elementsValuesForConfirmEditAction = (element, text) => {
     let elementDiv = document.createElement(element);
     const txt = document.createTextNode(text);
     elementDiv.append(txt);
     return elementDiv;
 };
+
 export const createInput = (prevValue) => {
     const textInput = document.createElement('input');
     textInput.setAttribute('type', 'text');
@@ -51,6 +54,7 @@ export const createH3orH2 = (text, type) => {
     h3OrH2.append(txt);
     return h3OrH2;
 };
+
 export const createBut = (txt, classCss, id, callback) => {
     const but = document.createElement('button');
     let text = document.createTextNode(txt);
