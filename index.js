@@ -22,12 +22,10 @@ const showPending = document.getElementById('showPending');
 const showNotStarted = document.getElementById('showNotStarted');
 
 
+// Observación: La gestión de estado global con variables let podría mejorarse implementando un patrón de estado más robusto
 let task = [];
 let idTask = 0;
-//El token y el idtable se consigue dentro de baserow, primero hay que crear una base de datos -> click en los 3 puntitos (numero entre parentesis)
-//El token se obtiene en tu perfil -> mi configuración -> fichas de la base de datos (dar permisos). La base de datos tiene que tener:
-//Columnas: +Fecha -> fecha con hora, +Descripción -> texto largo, +estado -> selección única opciones: 1. Pendiente 2. Finalizado 3. No iniciada, 
-// +titulo ->Texto de una sola línea y por último fecha_creacion -> fecha con hora. Es importante tanto el orden como esta escrito en estos comentarios
+// Observación: Los tokens y credenciales deberían estar en un archivo de configuración separado por seguridad
 let token = '';
 let idTable = '';
 let lon;
@@ -94,6 +92,7 @@ addTaskBut.addEventListener('click', () => {
     console.log(task)
 });
 
+// Observación: La función taskFilterArticle podría optimizarse para evitar recrear todo el DOM en cada filtrado
 const taskFilterArticle = (filter) => {
     if(filter){
         let taskFiltered = task.filter(el => el.status === filter);
@@ -114,6 +113,7 @@ const taskFilterArticle = (filter) => {
     
 };
 
+// Observación: La función generateTaskWithoutAddingTaskArr tiene demasiadas responsabilidades y podría dividirse en funciones más pequeñas
 const generateTaskWithoutAddingTaskArr = (title, desc, status, date, id) => {
     const article = document.createElement('article');
     article.setAttribute('class', 'main__container__taskList__cart');
@@ -170,6 +170,7 @@ const createTaskArticle = (title, desc, status, date, creationDate, id) => {
     idTask++;
 };
 
+// Observación: El manejo de errores en las operaciones CRUD podría ser más robusto y proporcionar mejor feedback al usuario
 const deleteTaskButAction = (idTask) => {
     const deleteBut = document.querySelectorAll('.deleteIcon');
     deleteBut.forEach(but => {
@@ -185,6 +186,7 @@ const deleteTaskButAction = (idTask) => {
     })
 };
 
+// Observación: La lógica de edición podría simplificarse y reutilizarse mejor, evitando la duplicación de código
 const editTaskButAction = (idTask) => {
     const editBut = document.querySelectorAll('.editIcon');
         editBut.forEach(but => {
@@ -217,6 +219,7 @@ const editTaskButAction = (idTask) => {
         })
 };
 
+// Observación: La función confirmEditTaskButAction podría beneficiarse de una mejor validación de datos antes de guardar
 const confirmEditTaskButAction = (idTask) => {
         const saveBut = document.querySelector('.saveIcon');
         saveBut.addEventListener('click', (ev) => {
@@ -268,6 +271,7 @@ const deleteAndPutConfirmSaveTasksBut = () => {
     saveAllTaskButAction(saveAllTaskBut);
 };
 
+// Observación: El manejo de localStorage podría beneficiarse de un servicio dedicado para la persistencia de datos
 const saveAllTaskButAction = (saveAllTaskBut) => {
     saveAllTaskBut.addEventListener('click', async(ev) => {
         if(localStorage.getItem('articles')){
@@ -333,6 +337,7 @@ const createRemoveApiKeyBut = () => {
     headerContainer.append(removeApiKeyBut);
 };
 
+// Observación: La función generateWeatherCarts podría beneficiarse de una mejor separación de responsabilidades
 const generateWeatherCarts = (data) => {
     console.log(data)
     for(let i = 0; i< 7; i++){
